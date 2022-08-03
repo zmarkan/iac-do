@@ -26,7 +26,7 @@ jobs:
           command: |
             export 'TAG=0.0.<< pipeline.number >>' >> $BASH_ENV
             echo 'export IMAGE_NAME=$CIRCLE_PROJECT_REPONAME' >> $BASH_ENV && source $BASH_ENV
-            sudo npm -g install
+            npm install
             docker build -t $DOCKER_LOGIN/$IMAGE_NAME -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .             
       - snyk/scan:
           fail-on-issues: false
@@ -158,10 +158,17 @@ jobs:
 workflows:
   scan_deploy:
     jobs:
-      - scan_app
-      - scan_push_docker_image
+      - scan_app:
+          context:
+            - Infosec
+      - scan_push_docker_image:
+          context:
+            - Infosec
+            - do-workshop
       - run_tests
-      - create_do_k8s_cluster
+      - create_do_k8s_cluster:
+          context:
+            - do-workshop
       - deploy_to_k8s:
           requires:
             - create_do_k8s_cluster
