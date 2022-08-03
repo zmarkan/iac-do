@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Snyk Scan Application files 
           command: |
-            sudo npm -g install 
+            npm install 
       - snyk/scan:
           fail-on-issues: false
           monitor-on-build: false
