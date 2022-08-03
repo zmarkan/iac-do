@@ -4,7 +4,7 @@ orbs:
 jobs:
   scan_app:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:16.16
     steps:
       - checkout
       - run:
@@ -16,7 +16,7 @@ jobs:
           monitor-on-build: false
   scan_push_docker_image:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:16.16
     steps:
       - checkout
       - setup_remote_docker:
@@ -41,7 +41,7 @@ jobs:
             docker push $DOCKER_LOGIN/$IMAGE_NAME          
   run_tests:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:16.16
     steps:
       - checkout
       - run:
@@ -166,6 +166,8 @@ workflows:
           requires:
             - create_do_k8s_cluster
             - scan_push_docker_image
+          context:
+            - do-workshop
       - smoketest_k8s_deployment:
           requires:
             - deploy_to_k8s
@@ -176,3 +178,5 @@ workflows:
       - destroy_k8s_cluster:
           requires:
             - approve_destroy
+          context:
+            - do-workshop
