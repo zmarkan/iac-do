@@ -118,6 +118,11 @@ jobs:
             doctl auth init -t $DIGITAL_OCEAN_TOKEN
             doctl kubernetes cluster kubeconfig save $CLUSTER_NAME
             terraform init
+            
+            echo $DIGITAL_OCEAN_TOKEN
+            echo $CLUSTER_NAME
+            echo $DOCKER_IMAGE
+
             terraform apply \
               -var do_token=$DIGITAL_OCEAN_TOKEN \
               -var cluster_name=$CLUSTER_NAME \
