@@ -61,7 +61,7 @@ jobs:
       - image: ariv3ra/terraform-gcp:latest
     steps:
       - checkout
-      - run:
+      - run: # Make sure TERRAFORM_TOKEN is stored
           name: Create .terraformrc file locally
           command: echo "credentials \"app.terraform.io\" {token = \"$TERRAFORM_TOKEN\"}" > $HOME/.terraformrc   
       - run:
@@ -187,3 +187,4 @@ workflows:
             - approve_destroy
           context:
             - do-workshop
+
