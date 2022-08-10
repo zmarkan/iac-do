@@ -1,6 +1,6 @@
 terraform {
 
-  required_version = ">= 0.13"
+  required_version = ">= 1.1.0"
 
   required_providers {
     digitalocean = {
@@ -15,10 +15,10 @@ terraform {
     }
   }
 
-  backend "remote" {
+  cloud {
     organization = "zmarkan-demos"
     workspaces {
-      name = "deploy-iac-do"
+      name = "iac-do"
     }
   }
 }

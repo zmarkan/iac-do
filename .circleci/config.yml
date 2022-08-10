@@ -92,9 +92,19 @@ jobs:
               -auto-approve
   deploy_to_k8s:
     docker:
-      - image: ariv3ra/terraform-gcp:latest
+      - image: cimg/base:2022.08
     steps:
       - checkout
+      - terraform/install:
+          terraform_version: 1.2.6
+      - run:
+          name: Install DO CLI
+          command: |
+            cd ~
+            wget https://github.com/digitalocean/doctl/releases/download/v1.78.0/doctl-1.78.0-linux-amd64.tar.gz
+            tar xf ~/doctl-1.78.0-linux-amd64.tar.gz
+            sudo mv ~/doctl /usr/local/bin
+
       - run:
           name: Create .terraformrc file locally
           command: echo "credentials \"app.terraform.io\" {token = \"$TERRAFORM_TOKEN\"}" > $HOME/.terraformrc
@@ -135,10 +145,19 @@ jobs:
             ./test/smoke_test $ENDPOINT              
   destroy_k8s_cluster:
     docker:
-      - image: ariv3ra/terraform-gcp:latest
+      - image: cimg/base:2022.08
     steps:
       - checkout
-     
+      - terraform/install:
+          terraform_version: 1.2.6
+      - run:
+          name: Install DO CLI
+          command: |
+            cd ~
+            wget https://github.com/digitalocean/doctl/releases/download/v1.78.0/doctl-1.78.0-linux-amd64.tar.gz
+            tar xf ~/doctl-1.78.0-linux-amd64.tar.gz
+            sudo mv ~/doctl /usr/local/bin
+
       - run:
           name: Create .terraformrc file locally
           command: echo "credentials \"app.terraform.io\" {token = \"$TERRAFORM_TOKEN\"}" > $HOME/.terraformrc && cat $HOME/.terraformrc
