@@ -15,12 +15,18 @@ terraform {
     }
   }
 
-  backend "remote" {
+  cloud {
     organization = "zmarkan-demos"
     workspaces {
       name = "iac-do"
     }
   }
+  # backend "remote" {
+  #   organization = "zmarkan-demos"
+  #   workspaces {
+  #     name = "iac-do"
+  #   }
+  # }
 }
 
 # Set up the DO K8s cluster
