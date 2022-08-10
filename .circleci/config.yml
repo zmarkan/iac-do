@@ -63,7 +63,7 @@ jobs:
       - image: cimg/base:2022.08
     steps:
       - checkout
-       - terraform/install:
+      - terraform/install:
           terraform_version: 1.2.6
       - run:
           name: Install DO CLI
