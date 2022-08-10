@@ -27,7 +27,6 @@ terraform {
   #     name = "iac-do"
   #   }
   # }
-}
 
 # Set up the DO K8s cluster
 provider "digitalocean" {
