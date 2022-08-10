@@ -73,11 +73,6 @@ jobs:
             tar xf ~/doctl-1.78.0-linux-amd64.tar.gz
             sudo mv ~/doctl /usr/local/bin
 
-      - run:
-          name: Connect DO CTL Kube Config
-          command: snap connect doctl:kube-config
-
-
       - run: # Make sure TERRAFORM_TOKEN is stored
           name: Create .terraformrc file locally
           command: echo "credentials \"app.terraform.io\" {token = \"$TERRAFORM_TOKEN\"}" > $HOME/.terraformrc   
