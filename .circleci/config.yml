@@ -1,6 +1,8 @@
 version: 2.1
 orbs:
   snyk: snyk/snyk@1.2.3
+  terraform: circleci/terraform@3.1.0
+
 jobs:
   scan_app:
     docker:
@@ -58,7 +60,7 @@ jobs:
           path: test-results          
   create_do_k8s_cluster:
     docker:
-      - image: ariv3ra/terraform-gcp:latest
+      - image: cimg/base:2022.08
     steps:
       - checkout
       - run: # Make sure TERRAFORM_TOKEN is stored
@@ -126,6 +128,8 @@ jobs:
       - image: ariv3ra/terraform-gcp:latest
     steps:
       - checkout
+      - terraform/install:
+          terraform_version: 1.2.6
       - run:
           name: Create .terraformrc file locally
           command: echo "credentials \"app.terraform.io\" {token = \"$TERRAFORM_TOKEN\"}" > $HOME/.terraformrc && cat $HOME/.terraformrc
@@ -136,6 +140,7 @@ jobs:
             export TAG=0.0.<< pipeline.number >>
             export DOCKER_IMAGE="${DOCKER_LOGIN}/${CIRCLE_PROJECT_REPONAME}:$TAG"
             cd terraform/do_k8s_deploy_app/
+            
             doctl auth init -t $DIGITAL_OCEAN_TOKEN
             doctl kubernetes cluster kubeconfig save $CLUSTER_NAME
             terraform init
