@@ -1,33 +1,32 @@
 terraform {
-  
-  cloud {
-    organization = "zmarkan-demos"
-    workspaces {
-      name = "iac-do"
-    }
-  }
+  required_version = ">= 1.1.0"
 
   required_providers {
     digitalocean = {
       source = "digitalocean/digitalocean"
     }
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = "1.13.3"
-    }    
+    }
     local = {
       source = "hashicorp/local"
     }
   }
 
-
+  cloud {
+    organization = "zmarkan-demos"
+    workspaces {
+      name = "iac-do"
+    }
+  }
 }
-  # backend "remote" {
-  #   organization = "zmarkan-demos"
-  #   workspaces {
-  #     name = "iac-do"
-  #   }
-  # }
+# backend "remote" {
+#   organization = "zmarkan-demos"
+#   workspaces {
+#     name = "iac-do"
+#   }
+# }
 
 # Set up the DO K8s cluster
 provider "digitalocean" {
