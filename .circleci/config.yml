@@ -125,8 +125,8 @@ jobs:
 
             terraform apply \
               -var "do_token=$DIGITAL_OCEAN_TOKEN" \
-              -var cluster_name=$CLUSTER_NAME \
-              -var docker_image=$DOCKER_IMAGE \
+              -var "cluster_name=$CLUSTER_NAME" \
+              -var "docker_image=$DOCKER_IMAGE" \
               -auto-approve
               # Save the Load Balancer Public IP Address
               export ENDPOINT="$(terraform output lb_public_ip)"
