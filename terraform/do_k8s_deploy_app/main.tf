@@ -16,7 +16,7 @@ terraform {
   }
 
   backend "remote" {
-    organization = "datapunks"
+    organization = "zmarkan-demos"
     workspaces {
       name = "deploy-iac-do"
     }
