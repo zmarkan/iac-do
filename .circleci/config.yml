@@ -199,17 +199,27 @@ jobs:
               -var cluster_name=$CLUSTER_NAME \
               -var do_k8s_slug_ver=$DO_K8S_SLUG_VER \
               -auto-approve
+
 workflows:
   scan_deploy:
     jobs:
-      - scan_app
-      - scan_push_docker_image
+      - scan_app:
+          context:
+            - Infosec
+      - scan_push_docker_image:
+          context:
+            - Infosec
+            - do-workshop
       - run_tests
-      - create_do_k8s_cluster
+      - create_do_k8s_cluster:
+          context:
+            - do-workshop
       - deploy_to_k8s:
           requires:
             - create_do_k8s_cluster
             - scan_push_docker_image
+          context:
+            - do-workshop
       - smoketest_k8s_deployment:
           requires:
             - deploy_to_k8s
@@ -220,3 +230,5 @@ workflows:
       - destroy_k8s_cluster:
           requires:
             - approve_destroy
+          context:
+            - do-workshop
