@@ -24,7 +24,7 @@ terraform {
 }
 
 provider "kubernetes" {
- 
+  load_config_file = false
 }
 
 provider "digitalocean" {
