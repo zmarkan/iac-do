@@ -18,3 +18,7 @@ variable "docker_image" {
   default     = "ariv3ra/nodejs-circleci:latest"
 }
 
+variable "do_k8s_slug_ver" {
+  type = string
+  description = "DO Kubernetes version slug. Get it using this: doctl kubernetes options versions"
+}
